@@ -1,5 +1,6 @@
 package educacionit;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import educacionit.crud.Delete;
@@ -10,10 +11,12 @@ import educacionit.entities.Alumno;
 import educacionit.entities.Curso;
 import educacionit.entities.Profesor;
 import educacionit.entities.Tecnologia;
+import educacionit.source.MyDataSource;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
 		
 		Fetch fetch = new Fetch();
 		Insert insert = new Insert();
@@ -29,60 +32,65 @@ public class Main {
 		Alumno alumno4 = new Alumno(4,"Sebastian");
 		
 		try {
+			Connection con = MyDataSource.getConnection();
+			
 			//Test de inserts
 			System.out.println("Insert:\n" + tecnologia + "\n" + curso
 					+ "\n" + profesor + "\n" + alumno1 + "\n" + alumno2
 					+ "\n" + alumno3 + "\n" + alumno4);
-			insert.insertTecnologia(tecnologia);
-			insert.insertCurso(curso);
-			insert.insertProfesor(profesor);
-			insert.insertAlumno(alumno1);
-			insert.insertAlumno(alumno2);
-			insert.insertAlumno(alumno3);
-			insert.insertAlumno(alumno4);
+			insert.insertTecnologia(con, tecnologia);
+			insert.insertCurso(con, curso);
+			insert.insertProfesor(con, profesor);
+			insert.insertAlumno(con, alumno1);
+			insert.insertAlumno(con, alumno2);
+			insert.insertAlumno(con, alumno3);
+			insert.insertAlumno(con, alumno4);
 			System.out.println("Insert profesor en la Join Table cursos_profesores\n");
-			insert.asignarProfesorACurso(1, 1);
+			insert.asignarProfesorACurso(con, 1, 1);
 			System.out.println("Insert alumnos en la Join Table cursos_alumnos\n");
-			insert.inscribirAlumnoEnCurso(1, 1);
-			insert.inscribirAlumnoEnCurso(1, 2);
-			insert.inscribirAlumnoEnCurso(1, 3);
-			insert.inscribirAlumnoEnCurso(1, 4);
+			insert.inscribirAlumnoEnCurso(con, 1, 1);
+			insert.inscribirAlumnoEnCurso(con, 1, 2);
+			insert.inscribirAlumnoEnCurso(con, 1, 3);
+			insert.inscribirAlumnoEnCurso(con, 1, 4);
 			
 			//Test de fetches
 			System.out.println("Fetch tecnologia con id = 1");
-			fetch.fetchTecnologiaById(1);
+			fetch.fetchTecnologiaById(con, 1);
 			System.out.println("Fetch curso con id = 1");
-			fetch.fetchCursoById(1);
+			fetch.fetchCursoById(con, 1);
 			System.out.println("Fetch profesor con id = 1");
-			fetch.fetchProfesorById(1);
+			fetch.fetchProfesorById(con, 1);
 			System.out.println("Fetch alumno con id = 1");
-			fetch.fetchAlumnoById(1);
+			fetch.fetchAlumnoById(con, 1);
 			System.out.println("Fetch todos los alumnos");
-			fetch.fetchAlumnos();
+			fetch.fetchAlumnos(con);
 			System.out.println("Fetch profesor del curso con id = 1 (aka Bootcamp Java Developer)");
-			fetch.fetchProfesorByCursoId(1);
+			fetch.fetchProfesorByCursoId(con, 1);
 			System.out.println("Fetch alumnos del curso con id = 1 (aka Bootcamp Java Developer)");
-			fetch.fetchAlumnosByCursoId(1);
+			fetch.fetchAlumnosByCursoId(con, 1);
 			
 			//Test de updates
 			System.out.println("Editando al profesor");
 			profesor.setNombre("MARIO");
-			update.updateProfesorById(1, profesor);
-			fetch.fetchProfesorById(1);
+			update.updateProfesorById(con, 1, profesor);
+			fetch.fetchProfesorById(con, 1);
 			
 			//Test de delete
 			System.out.println("Desasignando al profesor");
-			delete.desasignarProfesorACurso(1, 1);
+			delete.desasignarProfesorACurso(con, 1, 1);
 			System.out.println("Fetch profesor del curso con id 1...\nNo hay nada");
-			fetch.fetchProfesorByCursoId(1);
+			fetch.fetchProfesorByCursoId(con, 1);
 			System.out.println("Reasignando al profesor");
-			insert.asignarProfesorACurso(1, 1);
+			insert.asignarProfesorACurso(con, 1, 1);
 			System.out.println("Fetch profesor del curso con id = 1 (aka Bootcamp Java Developer)");
-			fetch.fetchProfesorByCursoId(1);
+			fetch.fetchProfesorByCursoId(con, 1);
+			
+			con.close();
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		
 
 	}
 

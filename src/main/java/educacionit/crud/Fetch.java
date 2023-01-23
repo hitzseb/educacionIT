@@ -17,8 +17,7 @@ public class Fetch {
 	
 	//Metodos para Tecnologia
 	
-	public void fetchTecnologiaById(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchTecnologiaById(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select * from tecnologias where id_tecnologia = " + id;
 		
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -32,11 +31,9 @@ public class Fetch {
 		}
 		System.out.println(tecnologia);
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchTecnologias() throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchTecnologias(Connection con) throws SQLException {
 		String SQL_QUERY = "select * from tecnologias";
 
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -48,14 +45,12 @@ public class Fetch {
 					rs.getString("nombre_tecnologia")));
 		}
 		System.out.println("");
-		con.close();
 	}
 	
 	
 	//Metodos para Curso
 	
-	public void fetchCursoById(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchCursoById(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select * from cursos where id_curso = " + id;
 		
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -70,11 +65,9 @@ public class Fetch {
 		}
 		System.out.println(curso);
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchCursos() throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchCursos(Connection con) throws SQLException {
 		String SQL_QUERY = "select * from cursos";
 
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -87,13 +80,11 @@ public class Fetch {
 					rs.getInt("id_tecnologia")));
 		}
 		System.out.println("");
-		con.close();
 	}
 	
 	//Metodos para Profesor
 	
-	public void fetchProfesorById(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchProfesorById(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select * from profesores where id_profesor = " + id;
 		
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -107,11 +98,9 @@ public class Fetch {
 		}
 		System.out.println(profesor);
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchProfesores() throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchProfesores(Connection con) throws SQLException {
 		String SQL_QUERY = "select * from profesores";
 
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -123,11 +112,9 @@ public class Fetch {
 					rs.getString("nombre_profesor")));
 		}
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchProfesorByCursoId(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchProfesorByCursoId(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select p.id_profesor, p.nombre_profesor "
 				+ "from cursos_profesores as j "
 				+ "left join profesores as p "
@@ -143,13 +130,11 @@ public class Fetch {
 					rs.getString("nombre_profesor")));
 		}
 		System.out.println("");
-		con.close();
 	}
 	
 	//Metodos para Alumno
 	
-	public void fetchAlumnoById(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchAlumnoById(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select * from alumnos where id_alumno = " + id;
 		
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -163,11 +148,9 @@ public class Fetch {
 		}
 		System.out.println(alumno);
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchAlumnos() throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchAlumnos(Connection con) throws SQLException {
 		String SQL_QUERY = "select * from alumnos";
 
 		PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -179,11 +162,9 @@ public class Fetch {
 					rs.getString("nombre_alumno")));
 		}
 		System.out.println("");
-		con.close();
 	}
 	
-	public void fetchAlumnosByCursoId(int id) throws SQLException {
-		Connection con = MyDataSource.getConnection();
+	public void fetchAlumnosByCursoId(Connection con, int id) throws SQLException {
 		String SQL_QUERY = "select a.id_alumno, a.nombre_alumno "
 				+ "from cursos_alumnos as j "
 				+ "left join alumnos as a "
@@ -199,7 +180,6 @@ public class Fetch {
 					rs.getString("nombre_alumno")));
 		}
 		System.out.println("");
-		con.close();
 	}
 
 }
